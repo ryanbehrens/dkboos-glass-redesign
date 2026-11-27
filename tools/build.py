@@ -44,7 +44,7 @@ def nav(current="", estimate_href="contact.html"):
         f'<a href="{s}.html"><img src="{u(img,500)}" alt="">{t}</a>' for s, t, lbl, img, _ in SERVICES)
     return f'''<!--nav-->
 <nav class="nav" id="nav">
-  <a href="./" class="logo" aria-label="D.K. Boos Glass home"><svg class="brand-logo" viewBox="0 0 303.54 84" role="img" aria-label="D.K. Boos Glass">{LOGO_INNER}</svg><span class="logo-est">Est.<br>1978</span></a>
+  <a href="./" class="logo" aria-label="D.K. Boos Glass home"><svg class="brand-logo" viewBox="0 0 303.54 87" role="img" aria-label="D.K. Boos Glass">{LOGO_INNER}</svg><span class="logo-est">Est.<br>1978</span></a>
   <div class="nav-links">
     <div class="has-drop"><button type="button" aria-expanded="false"{' class="current"' if current in SVC else ''}>Services <span class="chev">▾</span></button><div class="drop">{drop}</div></div>
     <a href="./#lab">Glass Lab</a>
