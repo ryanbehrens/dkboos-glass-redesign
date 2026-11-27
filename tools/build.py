@@ -104,7 +104,7 @@ def page(title, desc, body, current=""):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..600&family=Inter+Tight:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/site.css">
+<link rel="stylesheet" href="assets/site.css?v=<!--V-->">
 </head>
 <body>
 <!--SPRITE-->
@@ -114,7 +114,7 @@ def page(title, desc, body, current=""):
 {body}
 
 {footer()}
-<script src="assets/site.js"></script>
+<script src="assets/site.js?v=<!--V-->"></script>
 </body>
 </html>
 '''
@@ -538,12 +538,16 @@ PAGES["contact"] = page("Contact & Estimates", "Request a free at-home glass est
 def main():
     idx = INDEX.read_text()
     sprite = re.search(r'<svg width="0" height="0".*?</defs></svg>', idx, re.S).group(0)
+    import hashlib
+    v = hashlib.sha1((ROOT / "assets/site.css").read_bytes() + (ROOT / "assets/site.js").read_bytes()).hexdigest()[:8]
     for name, html in PAGES.items():
-        (ROOT / f"{name}.html").write_text(html.replace("<!--SPRITE-->", sprite))
+        (ROOT / f"{name}.html").write_text(html.replace("<!--SPRITE-->", sprite).replace("<!--V-->", v))
         print("wrote", f"{name}.html")
     idx = re.sub(r"<!--nav-->.*?<!--/nav-->", lambda _: nav("", "#estimate"), idx, flags=re.S)
     idx = re.sub(r"<!--footer-->.*?<!--/footer-->", lambda _: footer(), idx, flags=re.S)
+    idx = re.sub(r'assets/site\.(css|js)(\?v=\w+)?"', lambda m: f'assets/site.{m.group(1)}?v={v}"', idx)
     INDEX.write_text(idx)
+    print("asset version", v)
     print("synced nav/footer in index.html")
 
 if __name__ == "__main__":
