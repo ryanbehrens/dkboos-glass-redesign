@@ -259,7 +259,8 @@ body.intro-on .nav .brand-logo{opacity:0}
   .nav-links,.nav-phone{display:none}
   .hero-inner,.lab-grid,.story-grid,.area-grid,.cta-grid{grid-template-columns:1fr}
   .bento{grid-auto-rows:240px}
-  .viewer{min-height:0;aspect-ratio:16/10}
+  .viewer{min-height:0;height:auto}
+  .viewer::before{content:"";display:block;padding-top:62.5%}
   .hero-inner{padding-top:130px;gap:32px}
   .t1{grid-column:span 12}
   .t2,.t3,.t4,.t5,.t6{grid-column:span 6}
